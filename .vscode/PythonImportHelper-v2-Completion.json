@@ -75,6 +75,22 @@
         "documentation": {}
     },
     {
+        "label": "TestClient",
+        "importPath": "fastapi.testclient",
+        "description": "fastapi.testclient",
+        "isExtraImport": true,
+        "detail": "fastapi.testclient",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "importPath": "main",
+        "description": "main",
+        "isExtraImport": true,
+        "detail": "main",
+        "documentation": {}
+    },
+    {
         "label": "contas_a_pagar_e_receber_router",
         "importPath": "contas_a_pagar_e_receber.routers",
         "description": "contas_a_pagar_e_receber.routers",
@@ -87,7 +103,7 @@
         "kind": 6,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "class ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\nclass ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse])",
+        "peekOfCode": "class ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\nclass ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse], status_code=200)",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -96,7 +112,7 @@
         "kind": 6,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "class ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse])\nasync def listar_contas():\n    return [\n        ContaPagarReceberResponse(id=1, desc=\"Conta de luz\", valor=1000.50, tipo=\"pagar\"),\n        ContaPagarReceberResponse(id=2, desc=\"Aluguel\", valor=1000.50, tipo=\"pagar\"),\n    ]",
+        "peekOfCode": "class ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse], status_code=200)\nasync def listar_contas():\n    return [\n        ContaPagarReceberResponse(id=1, desc=\"Conta de luz\", valor=1000.50, tipo=\"pagar\"),\n        ContaPagarReceberResponse(id=2, desc=\"Aluguel\", valor=1000.50, tipo=\"pagar\"),\n    ]",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -188,6 +204,33 @@
         "description": "fast-api-deploy-venv.bin.activate_this",
         "peekOfCode": "sys.prefix = base",
         "detail": "fast-api-deploy-venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "test_dev_listar_contas_a_pagar_e_recber",
+        "kind": 2,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "peekOfCode": "def test_dev_listar_contas_a_pagar_e_recber():\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\ndef test_dev_criar_conta_a_pagar_e_receber():\n    nova_conta = {\n        \"desc\": \"Curso Python\",\n        \"valor\": 123,\n        \"tipo\": \"pagar\",\n    }\n    response = client.post(\"/contas-a-pagar-e-receber\", json=nova_conta)",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_dev_criar_conta_a_pagar_e_receber",
+        "kind": 2,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "peekOfCode": "def test_dev_criar_conta_a_pagar_e_receber():\n    nova_conta = {\n        \"desc\": \"Curso Python\",\n        \"valor\": 123,\n        \"tipo\": \"pagar\",\n    }\n    response = client.post(\"/contas-a-pagar-e-receber\", json=nova_conta)\n    assert response.status_code == 201",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "peekOfCode": "client = TestClient(app)\ndef test_dev_listar_contas_a_pagar_e_recber():\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\ndef test_dev_criar_conta_a_pagar_e_receber():\n    nova_conta = {\n        \"desc\": \"Curso Python\",\n        \"valor\": 123,\n        \"tipo\": \"pagar\",\n    }",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
         "documentation": {}
     },
     {

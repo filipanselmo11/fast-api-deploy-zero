@@ -17,7 +17,7 @@ class ContaPagarReceberRequest(BaseModel):
     valor: Decimal
     tipo: str
 
-@router.get("/", response_model=List[ContaPagarReceberResponse])
+@router.get("/", response_model=List[ContaPagarReceberResponse], status_code=200)
 async def listar_contas():
     return [
         ContaPagarReceberResponse(id=1, desc="Conta de luz", valor=1000.50, tipo="pagar"),
