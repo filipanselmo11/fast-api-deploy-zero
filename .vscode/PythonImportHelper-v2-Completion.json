@@ -1,5 +1,78 @@
 [
     {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Integer",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Numeric",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "shared.database",
+        "description": "shared.database",
+        "isExtraImport": true,
+        "detail": "shared.database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "shared.database",
+        "description": "shared.database",
+        "isExtraImport": true,
+        "detail": "shared.database",
+        "documentation": {}
+    },
+    {
+        "label": "contas_a_pagar_e_receber.routers",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "contas_a_pagar_e_receber.routers",
+        "description": "contas_a_pagar_e_receber.routers",
+        "detail": "contas_a_pagar_e_receber.routers",
+        "documentation": {}
+    },
+    {
+        "label": "contas_a_pagar_e_receber_router",
+        "importPath": "contas_a_pagar_e_receber.routers",
+        "description": "contas_a_pagar_e_receber.routers",
+        "isExtraImport": true,
+        "detail": "contas_a_pagar_e_receber.routers",
+        "documentation": {}
+    },
+    {
         "label": "Decimal",
         "importPath": "decimal",
         "description": "decimal",
@@ -24,6 +97,14 @@
         "documentation": {}
     },
     {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -37,6 +118,38 @@
         "description": "pydantic",
         "isExtraImport": true,
         "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "ContaPagarReceber",
+        "importPath": "contas_a_pagar_e_receber.models.conta_a_pagar_receber_model",
+        "description": "contas_a_pagar_e_receber.models.conta_a_pagar_receber_model",
+        "isExtraImport": true,
+        "detail": "contas_a_pagar_e_receber.models.conta_a_pagar_receber_model",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "importPath": "shared.dependencies",
+        "description": "shared.dependencies",
+        "isExtraImport": true,
+        "detail": "shared.dependencies",
         "documentation": {}
     },
     {
@@ -75,6 +188,14 @@
         "documentation": {}
     },
     {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.ext.declarative",
+        "description": "sqlalchemy.ext.declarative",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.declarative",
+        "documentation": {}
+    },
+    {
         "label": "TestClient",
         "importPath": "fastapi.testclient",
         "description": "fastapi.testclient",
@@ -91,11 +212,12 @@
         "documentation": {}
     },
     {
-        "label": "contas_a_pagar_e_receber_router",
-        "importPath": "contas_a_pagar_e_receber.routers",
-        "description": "contas_a_pagar_e_receber.routers",
-        "isExtraImport": true,
-        "detail": "contas_a_pagar_e_receber.routers",
+        "label": "ContaPagarReceber",
+        "kind": 6,
+        "importPath": "contas_a_pagar_e_receber.models.conta_a_pagar_receber_model",
+        "description": "contas_a_pagar_e_receber.models.conta_a_pagar_receber_model",
+        "peekOfCode": "class ContaPagarReceber(Base):\n    __tablename__ = \"contas_a_pagar_e_receber\"\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    desc = Column(String(30))\n    valor = Column(Numeric)\n    tipo = Column(String(30))",
+        "detail": "contas_a_pagar_e_receber.models.conta_a_pagar_receber_model",
         "documentation": {}
     },
     {
@@ -103,7 +225,7 @@
         "kind": 6,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "class ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\nclass ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse], status_code=200)",
+        "peekOfCode": "class ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\n    class Config:\n        orm_mode = True\nclass ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -112,7 +234,7 @@
         "kind": 6,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "class ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse], status_code=200)\nasync def listar_contas():\n    return [\n        ContaPagarReceberResponse(id=1, desc=\"Conta de luz\", valor=1000.50, tipo=\"pagar\"),\n        ContaPagarReceberResponse(id=2, desc=\"Aluguel\", valor=1000.50, tipo=\"pagar\"),\n    ]",
+        "peekOfCode": "class ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse], status_code=200)\nasync def listar_contas(db: Session = Depends(get_db)) -> List[ContaPagarReceberResponse]:\n    return db.query(ContaPagarReceber).all()\n@router.post(\"\", response_model=ContaPagarReceberResponse, status_code=201)\nasync def criar_conta(conta_a_pagar_e_receber_request:ContaPagarReceberRequest, db: Session = Depends(get_db)) -> ContaPagarReceberResponse:\n    contas_a_pagar_e_receber = ContaPagarReceber(**conta_a_pagar_e_receber_request.model_dump())",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -121,7 +243,7 @@
         "kind": 5,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "router = APIRouter(prefix=\"/contas-a-pagar-e-receber\")\nclass ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\nclass ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str",
+        "peekOfCode": "router = APIRouter(prefix=\"/contas-a-pagar-e-receber\")\nclass ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\n    class Config:\n        orm_mode = True\nclass ContaPagarReceberRequest(BaseModel):\n    desc: str",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -204,6 +326,60 @@
         "description": "fast-api-deploy-venv.bin.activate_this",
         "peekOfCode": "sys.prefix = base",
         "detail": "fast-api-deploy-venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "#SQLALCHEMY_DATABASE_URL",
+        "kind": 5,
+        "importPath": "shared.database",
+        "description": "shared.database",
+        "peekOfCode": "#SQLALCHEMY_DATABASE_URL = \"sqlite:///./sql_app.db\"\nSQLALCHEMY_DATABASE_URL = \"postgresql://postgres:senha123@localhost/postgres\"\nengine = create_engine(SQLALCHEMY_DATABASE_URL)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()",
+        "detail": "shared.database",
+        "documentation": {}
+    },
+    {
+        "label": "SQLALCHEMY_DATABASE_URL",
+        "kind": 5,
+        "importPath": "shared.database",
+        "description": "shared.database",
+        "peekOfCode": "SQLALCHEMY_DATABASE_URL = \"postgresql://postgres:senha123@localhost/postgres\"\nengine = create_engine(SQLALCHEMY_DATABASE_URL)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()",
+        "detail": "shared.database",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "kind": 5,
+        "importPath": "shared.database",
+        "description": "shared.database",
+        "peekOfCode": "engine = create_engine(SQLALCHEMY_DATABASE_URL)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()",
+        "detail": "shared.database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "kind": 5,
+        "importPath": "shared.database",
+        "description": "shared.database",
+        "peekOfCode": "SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\nBase = declarative_base()",
+        "detail": "shared.database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 5,
+        "importPath": "shared.database",
+        "description": "shared.database",
+        "peekOfCode": "Base = declarative_base()",
+        "detail": "shared.database",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "kind": 2,
+        "importPath": "shared.dependencies",
+        "description": "shared.dependencies",
+        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
+        "detail": "shared.dependencies",
         "documentation": {}
     },
     {
