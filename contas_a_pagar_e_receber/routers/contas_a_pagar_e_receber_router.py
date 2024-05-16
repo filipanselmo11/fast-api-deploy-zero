@@ -1,4 +1,3 @@
-import contas_a_pagar_e_receber.routers
 from decimal import Decimal
 from typing import List
 from fastapi import APIRouter, Depends
@@ -18,7 +17,7 @@ class ContaPagarReceberResponse(BaseModel):
     tipo: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ContaPagarReceberRequest(BaseModel):
     desc: str
