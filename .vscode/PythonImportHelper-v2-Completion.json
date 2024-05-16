@@ -105,6 +105,14 @@
         "documentation": {}
     },
     {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
         "label": "fileConfig",
         "importPath": "logging.config",
         "description": "logging.config",
@@ -130,6 +138,14 @@
     },
     {
         "label": "SessionLocal",
+        "importPath": "shared.database",
+        "description": "shared.database",
+        "isExtraImport": true,
+        "detail": "shared.database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
         "importPath": "shared.database",
         "description": "shared.database",
         "isExtraImport": true,
@@ -206,6 +222,22 @@
         "description": "sqlalchemy.orm",
         "isExtraImport": true,
         "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "importPath": "shared.dependencies",
+        "description": "shared.dependencies",
+        "isExtraImport": true,
+        "detail": "shared.dependencies",
         "documentation": {}
     },
     {
@@ -509,30 +541,84 @@
         "documentation": {}
     },
     {
-        "label": "test_dev_listar_contas_a_pagar_e_recber",
+        "label": "override_get_db",
         "kind": 2,
-        "importPath": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
-        "description": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
-        "peekOfCode": "def test_dev_listar_contas_a_pagar_e_recber():\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\ndef test_dev_criar_conta_a_pagar_e_receber():\n    nova_conta = {\n        \"desc\": \"Curso Python\",\n        \"valor\": 123,\n        \"tipo\": \"pagar\",\n    }\n    response = client.post(\"/contas-a-pagar-e-receber\", json=nova_conta)",
-        "detail": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "def override_get_db():\n    db = TestingSessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\napp.dependency_overrides[get_db] = override_get_db\ndef test_dev_listar_contas_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_dev_listar_contas_a_pagar_e_receber",
+        "kind": 2,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "def test_dev_listar_contas_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    client.post(\"/contas-a-pagar-e-receber\", json={\"desc\":\"Aluguel\", \"valor\": 1000, \"tipo\":\"pagar\"})\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\n    # assert response.json() == []\ndef test_dev_criar_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
         "documentation": {}
     },
     {
         "label": "test_dev_criar_conta_a_pagar_e_receber",
         "kind": 2,
-        "importPath": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
-        "description": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
-        "peekOfCode": "def test_dev_criar_conta_a_pagar_e_receber():\n    nova_conta = {\n        \"desc\": \"Curso Python\",\n        \"valor\": 123,\n        \"tipo\": \"pagar\",\n    }\n    response = client.post(\"/contas-a-pagar-e-receber\", json=nova_conta)\n    assert response.status_code == 201",
-        "detail": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "def test_dev_criar_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    client.post(\"/contas-a-pagar-e-receber\")\n    nova_conta = {\n        \"desc\": \"Curso Python\",\n        \"valor\": 123,\n        \"tipo\": \"pagar\",\n    }\n    nova_conta_copy = nova_conta.copy()",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_dev_retornar_erro_excedido_descricao",
+        "kind": 2,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "def test_dev_retornar_erro_excedido_descricao():\n    response = client.post(\"/contas-a-pagar-e-receber\", json={\n        \"desc\": \"Desc teste deve retornar\",\n        \"valor\": 12321,\n        \"tipo\": \"Pagar\"\n    })",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
         "documentation": {}
     },
     {
         "label": "client",
         "kind": 5,
-        "importPath": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
-        "description": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
-        "peekOfCode": "client = TestClient(app)\ndef test_dev_listar_contas_a_pagar_e_recber():\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\ndef test_dev_criar_conta_a_pagar_e_receber():\n    nova_conta = {\n        \"desc\": \"Curso Python\",\n        \"valor\": 123,\n        \"tipo\": \"pagar\",\n    }",
-        "detail": "test.contas_a_pagar_e_receber.routers.test_contas_a_pagar_e_receber_router",
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "client = TestClient(app)\nSQLALCHEMY_DATABASE_URL = \"sqlite:///./test.db\"\nengine = create_engine(\n    SQLALCHEMY_DATABASE_URL,\n    connect_args={\"check_same_thread\": False}\n)\nTestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef override_get_db():\n    db = TestingSessionLocal()\n    try:",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "SQLALCHEMY_DATABASE_URL",
+        "kind": 5,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "SQLALCHEMY_DATABASE_URL = \"sqlite:///./test.db\"\nengine = create_engine(\n    SQLALCHEMY_DATABASE_URL,\n    connect_args={\"check_same_thread\": False}\n)\nTestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef override_get_db():\n    db = TestingSessionLocal()\n    try:\n        yield db",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "kind": 5,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "engine = create_engine(\n    SQLALCHEMY_DATABASE_URL,\n    connect_args={\"check_same_thread\": False}\n)\nTestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef override_get_db():\n    db = TestingSessionLocal()\n    try:\n        yield db\n    finally:",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "TestingSessionLocal",
+        "kind": 5,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndef override_get_db():\n    db = TestingSessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\napp.dependency_overrides[get_db] = override_get_db\ndef test_dev_listar_contas_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "app.dependency_overrides[get_db]",
+        "kind": 5,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "app.dependency_overrides[get_db] = override_get_db\ndef test_dev_listar_contas_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    client.post(\"/contas-a-pagar-e-receber\", json={\"desc\":\"Aluguel\", \"valor\": 1000, \"tipo\":\"pagar\"})\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\n    # assert response.json() == []\ndef test_dev_criar_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
         "documentation": {}
     },
     {
