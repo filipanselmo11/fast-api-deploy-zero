@@ -193,6 +193,22 @@
         "documentation": {}
     },
     {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -249,6 +265,30 @@
         "documentation": {}
     },
     {
+        "label": "NotFound",
+        "importPath": "shared.exceptions",
+        "description": "shared.exceptions",
+        "isExtraImport": true,
+        "detail": "shared.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "NotFound",
+        "importPath": "shared.exceptions",
+        "description": "shared.exceptions",
+        "isExtraImport": true,
+        "detail": "shared.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "NotFound",
+        "importPath": "shared.exceptions",
+        "description": "shared.exceptions",
+        "isExtraImport": true,
+        "detail": "shared.exceptions",
+        "documentation": {}
+    },
+    {
         "label": "annotations",
         "importPath": "__future__",
         "description": "__future__",
@@ -292,6 +332,14 @@
         "documentation": {}
     },
     {
+        "label": "JSONResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
         "label": "TestClient",
         "importPath": "fastapi.testclient",
         "description": "fastapi.testclient",
@@ -313,6 +361,14 @@
         "description": "contas_a_pagar_e_receber.routers",
         "isExtraImport": true,
         "detail": "contas_a_pagar_e_receber.routers",
+        "documentation": {}
+    },
+    {
+        "label": "not_found_handler",
+        "importPath": "shared.exceptions_handler",
+        "description": "shared.exceptions_handler",
+        "isExtraImport": true,
+        "detail": "shared.exceptions_handler",
         "documentation": {}
     },
     {
@@ -392,7 +448,16 @@
         "kind": 6,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "class ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse], status_code=200)\nasync def listar_contas(db: Session = Depends(get_db)) -> List[ContaPagarReceberResponse]:\n    return db.query(ContaPagarReceber).all()\n@router.get(\"/{id_contar_pagar_receber}\", response_model=ContaPagarReceberResponse, status_code=200)\nasync def obter_uma_conta(id_conta_pagar_receber: int, db:Session=Depends(get_db)) -> ContaPagarReceberResponse:\n    conta_pagar_receber: ContaPagarReceber = db.query(ContaPagarReceber).get(id_conta_pagar_receber)",
+        "peekOfCode": "class ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse], status_code=200)\nasync def listar_contas(db: Session = Depends(get_db)) -> List[ContaPagarReceberResponse]:\n    return db.query(ContaPagarReceber).all()\n@router.get(\"/{id_contar_pagar_receber}\", response_model=ContaPagarReceberResponse, status_code=200)\nasync def obter_uma_conta(id_conta_pagar_receber: int, db:Session=Depends(get_db)) -> ContaPagarReceberResponse:\n    conta_pagar_receber = busca_conta_por_id(id_conta_pagar_receber, db)",
+        "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "busca_conta_por_id",
+        "kind": 2,
+        "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
+        "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
+        "peekOfCode": "def busca_conta_por_id(id: int, db: Session) -> ContaPagarReceber:\n    conta_pagar_receber = db.query(ContaPagarReceber).get(id)\n    if conta_pagar_receber is None:\n        raise NotFound(\"Conta a pagar e receber\")\n    return conta_pagar_receber",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -541,6 +606,15 @@
         "documentation": {}
     },
     {
+        "label": "NotFound",
+        "kind": 6,
+        "importPath": "shared.exceptions",
+        "description": "shared.exceptions",
+        "peekOfCode": "class NotFound(Exception):\n    def __init__(self, name:str):\n        self.name = name",
+        "detail": "shared.exceptions",
+        "documentation": {}
+    },
+    {
         "label": "override_get_db",
         "kind": 2,
         "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
@@ -644,7 +718,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\napp.include_router(contas_a_pagar_e_receber_router.router)",
+        "peekOfCode": "app = FastAPI()\napp.include_router(contas_a_pagar_e_receber_router.router)\napp.add_exception_handler(NotFound, not_found_handler)",
         "detail": "main",
         "documentation": {}
     }
