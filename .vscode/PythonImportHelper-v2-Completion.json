@@ -392,7 +392,7 @@
         "kind": 6,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "class ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse], status_code=200)\nasync def listar_contas(db: Session = Depends(get_db)) -> List[ContaPagarReceberResponse]:\n    return db.query(ContaPagarReceber).all()\n@router.post(\"\", response_model=ContaPagarReceberResponse, status_code=201)\nasync def criar_conta(conta_a_pagar_e_receber_request:ContaPagarReceberRequest, db: Session = Depends(get_db)) -> ContaPagarReceberResponse:\n    contas_a_pagar_e_receber = ContaPagarReceber(**conta_a_pagar_e_receber_request.model_dump())",
+        "peekOfCode": "class ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal\n    tipo: str\n@router.get(\"/\", response_model=List[ContaPagarReceberResponse], status_code=200)\nasync def listar_contas(db: Session = Depends(get_db)) -> List[ContaPagarReceberResponse]:\n    return db.query(ContaPagarReceber).all()\n@router.get(\"/{id_contar_pagar_receber}\", response_model=ContaPagarReceberResponse, status_code=200)\nasync def obter_uma_conta(id_conta_pagar_receber: int, db:Session=Depends(get_db)) -> ContaPagarReceberResponse:\n    conta_pagar_receber: ContaPagarReceber = db.query(ContaPagarReceber).get(id_conta_pagar_receber)",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -554,7 +554,7 @@
         "kind": 2,
         "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
         "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
-        "peekOfCode": "def test_dev_listar_contas_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    client.post(\"/contas-a-pagar-e-receber\", json={\"desc\":\"Aluguel\", \"valor\": 1000, \"tipo\":\"pagar\"})\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\n    # assert response.json() == []\ndef test_dev_criar_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)",
+        "peekOfCode": "def test_dev_listar_contas_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    client.get(\"/contas-a-pagar-e-receber\", json={\"desc\":\"Aluguel\", \"valor\": 1000, \"tipo\":\"pagar\"})\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\n    # assert response.json() == []\ndef test_dev_criar_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)",
         "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -572,7 +572,25 @@
         "kind": 2,
         "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
         "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
-        "peekOfCode": "def test_dev_retornar_erro_excedido_descricao():\n    response = client.post(\"/contas-a-pagar-e-receber\", json={\n        \"desc\": \"Desc teste deve retornar\",\n        \"valor\": 12321,\n        \"tipo\": \"Pagar\"\n    })",
+        "peekOfCode": "def test_dev_retornar_erro_excedido_descricao():\n    response = client.post(\"/contas-a-pagar-e-receber\", json={\n        \"desc\": \"Desc teste deve retornar\",\n        \"valor\": 12321,\n        \"tipo\": \"Pagar\"\n    })\ndef test_dev_atualizar_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    response_put = client.post(\"/contas-a-pagar-e-receber\", json={",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_dev_atualizar_conta_a_pagar_e_receber",
+        "kind": 2,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "def test_dev_atualizar_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    response_put = client.post(\"/contas-a-pagar-e-receber\", json={\n        \"desc\": \"Curso de python\",\n        \"valor\": 123,\n        \"tipo\": \"pagar\"\n    })\n    id_conta_pagar_receber = response_put.json()['id']\n    client.put(f\"/contas-a-pagar-e-receber/{id_conta_pagar_receber}\", json={",
+        "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "test_dev_remover_conta_a_pagar_e_receber",
+        "kind": 2,
+        "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
+        "peekOfCode": "def test_dev_remover_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    response_put = client.post(\"/contas-a-pagar-e-receber\", json={\n        \"desc\": \"Curso de python\",\n        \"valor\": 123,\n        \"tipo\": \"pagar\"\n    })\n    id_conta_pagar_receber = response_put.json()['id']\n    client.delete(f\"/contas-a-pagar-e-receber/{id_conta_pagar_receber}\")",
         "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -617,7 +635,7 @@
         "kind": 5,
         "importPath": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
         "description": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
-        "peekOfCode": "app.dependency_overrides[get_db] = override_get_db\ndef test_dev_listar_contas_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    client.post(\"/contas-a-pagar-e-receber\", json={\"desc\":\"Aluguel\", \"valor\": 1000, \"tipo\":\"pagar\"})\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\n    # assert response.json() == []\ndef test_dev_criar_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)",
+        "peekOfCode": "app.dependency_overrides[get_db] = override_get_db\ndef test_dev_listar_contas_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)\n    Base.metadata.create_all(bind=engine)\n    client.get(\"/contas-a-pagar-e-receber\", json={\"desc\":\"Aluguel\", \"valor\": 1000, \"tipo\":\"pagar\"})\n    response = client.get(\"/contas-a-pagar-e-receber\")\n    assert response.status_code == 200\n    # assert response.json() == []\ndef test_dev_criar_conta_a_pagar_e_receber():\n    Base.metadata.drop_all(bind=engine)",
         "detail": "test.contas_a_pagar_e_receber.routers.test_integrado_contas_a_pagar_e_receber_router",
         "documentation": {}
     },

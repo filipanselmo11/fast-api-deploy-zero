@@ -29,7 +29,7 @@ app.dependency_overrides[get_db] = override_get_db
 def test_dev_listar_contas_a_pagar_e_receber():
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
-    client.post("/contas-a-pagar-e-receber", json={"desc":"Aluguel", "valor": 1000, "tipo":"pagar"})
+    client.get("/contas-a-pagar-e-receber", json={"desc":"Aluguel", "valor": 1000, "tipo":"pagar"})
     response = client.get("/contas-a-pagar-e-receber")
     assert response.status_code == 200
     # assert response.json() == []
@@ -57,3 +57,35 @@ def test_dev_retornar_erro_excedido_descricao():
         "valor": 12321,
         "tipo": "Pagar"
     })
+    
+def test_dev_atualizar_conta_a_pagar_e_receber():
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+    response_put = client.post("/contas-a-pagar-e-receber", json={
+        "desc": "Curso de python",
+        "valor": 123,
+        "tipo": "pagar"
+    })
+
+    id_conta_pagar_receber = response_put.json()['id']
+    client.put(f"/contas-a-pagar-e-receber/{id_conta_pagar_receber}", json={
+        "desc": "Curso de HTML",
+        "valor": 111,
+        "tipo": "Pagar"
+    })
+    assert response_put.status_code == 200
+    assert response_put.json()['valor'] == 123
+
+
+def test_dev_remover_conta_a_pagar_e_receber():
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+    response_put = client.post("/contas-a-pagar-e-receber", json={
+        "desc": "Curso de python",
+        "valor": 123,
+        "tipo": "pagar"
+    })
+
+    id_conta_pagar_receber = response_put.json()['id']
+    client.delete(f"/contas-a-pagar-e-receber/{id_conta_pagar_receber}")
+    assert response_put.status_code == 204
