@@ -24,6 +24,7 @@ class ContaPagarReceberRequest(BaseModel):
     desc: str
     valor: Decimal
     tipo: str
+    fornecedor_cliente_id: int | None = None
 
 @router.get("/", response_model=List[ContaPagarReceberResponse], status_code=200)
 async def listar_contas(db: Session = Depends(get_db)) -> List[ContaPagarReceberResponse]:
