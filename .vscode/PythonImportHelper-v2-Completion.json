@@ -289,6 +289,14 @@
         "documentation": {}
     },
     {
+        "label": "FornecedorCliente",
+        "importPath": "contas_a_pagar_e_receber.models.fornecedor_cliente_model",
+        "description": "contas_a_pagar_e_receber.models.fornecedor_cliente_model",
+        "isExtraImport": true,
+        "detail": "contas_a_pagar_e_receber.models.fornecedor_cliente_model",
+        "documentation": {}
+    },
+    {
         "label": "relationship",
         "importPath": "sqlalchemy.orm",
         "description": "sqlalchemy.orm",
@@ -354,6 +362,14 @@
     },
     {
         "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -462,6 +478,14 @@
         "description": "shared.exceptions",
         "isExtraImport": true,
         "detail": "shared.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "FornecedorClienteResponse",
+        "importPath": "contas_a_pagar_e_receber.routers.fornecedor_cliente_router",
+        "description": "contas_a_pagar_e_receber.routers.fornecedor_cliente_router",
+        "isExtraImport": true,
+        "detail": "contas_a_pagar_e_receber.routers.fornecedor_cliente_router",
         "documentation": {}
     },
     {
@@ -668,7 +692,7 @@
         "kind": 6,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "class ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\n    class Config:\n        from_attributes = True\nclass ContaPagarReceberRequest(BaseModel):\n    desc: str\n    valor: Decimal",
+        "peekOfCode": "class ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\n    fornecedor: FornecedorClienteResponse | None = None\n    class Config:\n        from_attributes = True\nclass ContaPagarReceberRequest(BaseModel):\n    desc: str",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -686,7 +710,16 @@
         "kind": 2,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "def busca_conta_por_id(id: int, db: Session) -> ContaPagarReceber:\n    conta_pagar_receber = db.query(ContaPagarReceber).get(id)\n    if conta_pagar_receber is None:\n        raise NotFound(\"Conta a pagar e receber\")\n    return conta_pagar_receber",
+        "peekOfCode": "def busca_conta_por_id(id: int, db: Session) -> ContaPagarReceber:\n    conta_pagar_receber = db.query(ContaPagarReceber).get(id)\n    if conta_pagar_receber is None:\n        raise NotFound(\"Conta a pagar e receber\")\n    return conta_pagar_receber\ndef validar_fornecedor(fornecedor_cliente_id, db):\n    if fornecedor_cliente_id is not None:\n        conta_pagar_receber = db.query(FornecedorCliente).get(fornecedor_cliente_id)\n        if conta_pagar_receber is None:\n            raise HTTPException(status_code=422, detail=\"Esse fornecedor não existe no DB\")",
+        "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
+        "documentation": {}
+    },
+    {
+        "label": "validar_fornecedor",
+        "kind": 2,
+        "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
+        "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
+        "peekOfCode": "def validar_fornecedor(fornecedor_cliente_id, db):\n    if fornecedor_cliente_id is not None:\n        conta_pagar_receber = db.query(FornecedorCliente).get(fornecedor_cliente_id)\n        if conta_pagar_receber is None:\n            raise HTTPException(status_code=422, detail=\"Esse fornecedor não existe no DB\")\n    return conta_pagar_receber",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
@@ -695,7 +728,7 @@
         "kind": 5,
         "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
-        "peekOfCode": "router = APIRouter(prefix=\"/contas-a-pagar-e-receber\")\nclass ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\n    class Config:\n        from_attributes = True\nclass ContaPagarReceberRequest(BaseModel):\n    desc: str",
+        "peekOfCode": "router = APIRouter(prefix=\"/contas-a-pagar-e-receber\")\nclass ContaPagarReceberResponse(BaseModel):\n    id: int\n    desc: str\n    valor: Decimal\n    tipo: str\n    fornecedor: FornecedorClienteResponse | None = None\n    class Config:\n        from_attributes = True\nclass ContaPagarReceberRequest(BaseModel):",
         "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
