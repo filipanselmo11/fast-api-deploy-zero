@@ -64,6 +64,14 @@
         "documentation": {}
     },
     {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "op",
         "importPath": "alembic",
         "description": "alembic",
@@ -273,6 +281,14 @@
         "documentation": {}
     },
     {
+        "label": "ContaPagarReceber",
+        "importPath": "contas_a_pagar_e_receber.models.conta_a_pagar_receber_model",
+        "description": "contas_a_pagar_e_receber.models.conta_a_pagar_receber_model",
+        "isExtraImport": true,
+        "detail": "contas_a_pagar_e_receber.models.conta_a_pagar_receber_model",
+        "documentation": {}
+    },
+    {
         "label": "FornecedorCliente",
         "importPath": "contas_a_pagar_e_receber.models.fornecedor_cliente_model",
         "description": "contas_a_pagar_e_receber.models.fornecedor_cliente_model",
@@ -298,6 +314,14 @@
     },
     {
         "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
         "importPath": "sqlalchemy.orm",
         "description": "sqlalchemy.orm",
         "isExtraImport": true,
@@ -393,6 +417,22 @@
         "documentation": {}
     },
     {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "Request",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -422,6 +462,14 @@
         "description": "pydantic",
         "isExtraImport": true,
         "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "importPath": "shared.dependencies",
+        "description": "shared.dependencies",
+        "isExtraImport": true,
+        "detail": "shared.dependencies",
         "documentation": {}
     },
     {
@@ -486,6 +534,14 @@
         "description": "contas_a_pagar_e_receber.routers.fornecedor_cliente_router",
         "isExtraImport": true,
         "detail": "contas_a_pagar_e_receber.routers.fornecedor_cliente_router",
+        "documentation": {}
+    },
+    {
+        "label": "ContaPagarReceberResponse",
+        "importPath": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
+        "description": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
+        "isExtraImport": true,
+        "detail": "contas_a_pagar_e_receber.routers.contas_a_pagar_e_receber_router",
         "documentation": {}
     },
     {
@@ -565,6 +621,14 @@
     },
     {
         "label": "fornecedor_cliente_router",
+        "importPath": "contas_a_pagar_e_receber.routers",
+        "description": "contas_a_pagar_e_receber.routers",
+        "isExtraImport": true,
+        "detail": "contas_a_pagar_e_receber.routers",
+        "documentation": {}
+    },
+    {
+        "label": "fornecedor_cliente_vs_contas_router",
         "importPath": "contas_a_pagar_e_receber.routers",
         "description": "contas_a_pagar_e_receber.routers",
         "isExtraImport": true,
@@ -766,6 +830,15 @@
         "description": "contas_a_pagar_e_receber.routers.fornecedor_cliente_router",
         "peekOfCode": "router = APIRouter(prefix=\"/fornecedor-cliente\")\nclass FornecedorClienteResponse(BaseModel):\n    id: int\n    nome: str\n    class Config:\n        from_attributes = True\nclass FornecedorClienteRequest(BaseModel):\n    nome: str\n@router.get(\"/\", response_model=List[FornecedorClienteResponse], status_code=200)\nasync def listar_fornecedores(db: Session = Depends(get_db)) -> List[FornecedorClienteResponse]:",
         "detail": "contas_a_pagar_e_receber.routers.fornecedor_cliente_router",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "contas_a_pagar_e_receber.routers.fornecedor_cliente_vs_contas_router",
+        "description": "contas_a_pagar_e_receber.routers.fornecedor_cliente_vs_contas_router",
+        "peekOfCode": "router = APIRouter(prefix=\"/fornecedor-cliente\")\n@router.get(\"/{id_fornecedor_cliente}/contas-a-pagar-e-receber\", response_model=List[ContaPagarReceberResponse], status_code=200)\nasync def obter_contas_a_pagar_fornecedor_cliente_id(id_fornecedor: int, db:Session=Depends(get_db)) -> List[ContaPagarReceberResponse]:\n    response_db = db.query(ContaPagarReceber).filter_by(fornecedor_cliente_id=id_fornecedor).all()\n    return response_db",
+        "detail": "contas_a_pagar_e_receber.routers.fornecedor_cliente_vs_contas_router",
         "documentation": {}
     },
     {
@@ -1016,7 +1089,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "app = FastAPI()\napp.include_router(contas_a_pagar_e_receber_router.router)\napp.include_router(fornecedor_cliente_router.router)\napp.add_exception_handler(NotFound, not_found_handler)",
+        "peekOfCode": "app = FastAPI()\napp.include_router(contas_a_pagar_e_receber_router.router)\napp.include_router(fornecedor_cliente_router.router)\napp.include_router(fornecedor_cliente_vs_contas_router.router)\napp.add_exception_handler(NotFound, not_found_handler)",
         "detail": "main",
         "documentation": {}
     }

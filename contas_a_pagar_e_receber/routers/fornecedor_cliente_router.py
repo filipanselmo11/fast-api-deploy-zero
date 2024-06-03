@@ -30,6 +30,7 @@ async def obter_um_fornecedor(id_fornecedor: int, db:Session=Depends(get_db)) ->
     fornecedor_cliente = busca_fornecedor_por_id(id_fornecedor, db)
     return fornecedor_cliente
 
+
 @router.post("", response_model=FornecedorClienteResponse, status_code=201)
 async def criar_fornecedor(fornecedor_cliente_request:FornecedorClienteRequest, db: Session = Depends(get_db)) -> FornecedorClienteResponse:
     fornecedor_cliente = FornecedorCliente(**fornecedor_cliente_request.model_dump())
