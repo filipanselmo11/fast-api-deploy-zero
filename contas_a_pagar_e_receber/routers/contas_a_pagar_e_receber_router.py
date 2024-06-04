@@ -1,3 +1,4 @@
+import datetime
 from decimal import Decimal
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
@@ -19,6 +20,9 @@ class ContaPagarReceberResponse(BaseModel):
     desc: str
     valor: Decimal
     tipo: str
+    data_da_baixa: datetime
+    valor_da_baixa: Decimal
+    esta_baixada: bool
     fornecedor: FornecedorClienteResponse | None = None
 
     class Config:
@@ -59,6 +63,19 @@ async def atualizar_conta(id_conta_pagar_receber: int, conta_a_pagar_e_receber_r
     db.add(conta_pagar_receber)
     db.commit()
     db.refresh(conta_pagar_receber)
+    return conta_pagar_receber
+
+@router.post("/{id_contar_pagar_receber}/baixar", response_model=ContaPagarReceberResponse, status_code=200)
+async def baixar_conta(id_conta_pagar_receber: int, db: Session = Depends(get_db)) -> ContaPagarReceberResponse:
+    conta_pagar_receber = busca_conta_por_id(id_conta_pagar_receber, db)
+
+    if conta_pagar_receber.esta_baixada and conta_pagar_receber.valor != conta_pagar_receber.valor_da_baixa:
+        conta_pagar_receber.data_da_baixa = datetime.now()
+        conta_pagar_receber.esta_baixada = True
+        conta_pagar_receber.valor_da_baixa = conta_pagar_receber.valor
+        db.add(conta_pagar_receber)
+        db.commit()
+        db.refresh(conta_pagar_receber)
     return conta_pagar_receber
 
 @router.delete("/{id_contar_pagar_receber}", status_code=204)
